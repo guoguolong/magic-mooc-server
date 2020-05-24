@@ -1,0 +1,1 @@
+sequelize-auto -o "../app/models/mysql" -d moocdb -h localhost -u magicmooc -p 3306 -x magicmooc -e mysql
