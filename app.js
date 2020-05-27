@@ -27,11 +27,6 @@ const router = new Router();
         }    
     }
 
-    const baseCtrllDir = './app/controllers/';
-    const userCtrl = require(path.resolve(baseCtrllDir, 'user'))(config);
-    const courseCtrl = require(path.resolve(baseCtrllDir, 'course'))(config);
-    const articleCtrl = require(path.resolve(baseCtrllDir, 'article'))(config);
-
     const baseGqlDir = './app/gql/';
     const gqlCtrls = {
         user: require(path.resolve(baseGqlDir, 'user'))(appContext, config),
@@ -43,22 +38,7 @@ const router = new Router();
         ctx.body = 'Hello Koa Router';
     }).all('/users', gqlCtrls.user)
     .all('/article', gqlCtrls.article)
-    .all('/lession', gqlCtrls.course)
-    .all('course', '/course/list', async (ctx, next) => {
-        await courseCtrl.list(ctx, next);
-    }).all('course', '/course/detail/:id', async (ctx, next) => {
-        await courseCtrl.detail(ctx, next);
-    }).all('course', '/course/summary/:id', async (ctx, next) => {
-        await courseCtrl.summary(ctx, next);
-    }).post('course', '/course/save/:id', async (ctx, next) => {
-        await courseCtrl.save(ctx, next);
-    }).get('course', '/course/delete/:id', async (ctx, next) => {
-        await courseCtrl.delete(ctx, next);
-    }).all('article', '/article/list/:courseId', async (ctx, next) => {
-        await articleCtrl.list(ctx, next);
-    }).all('article', '/article/:id', async (ctx, next) => {
-        await articleCtrl.detail(ctx, next);
-    });
+    .all('/course', gqlCtrls.course);
     
     app.use(cors())
     // app.use(async (ctx, next) => {
