@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 'nextval(course_id_seq::regclass)',
+      // defaultValue: 'nextval(course_id_seq::regclass)',
       primaryKey: true,
       autoIncrement: true      
     },

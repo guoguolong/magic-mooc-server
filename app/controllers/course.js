@@ -28,7 +28,6 @@ module.exports = function (config) {
             const Course = ctx.getEntity('Course');
             const data = ctx.request.body
             data.price = parseInt(data.price, 10)
-            console.error('data.price:::', data.price)
             if (data.price <=0) {
                 throw new Error('Price must be greater than 0.')
             }
