@@ -1,4 +1,4 @@
-const { buildSchema, GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLInt } = require('graphql');
+const { buildSchema, GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLInt, GraphQLList } = require('graphql');
 const graphqlHTTP = require('koa-graphql');
 const graphqlSeq = require('graphql-sequelize');
 
@@ -28,7 +28,38 @@ module.exports = function(ctx, config) {
                         }
                     },
                     resolve: graphqlSeq.resolver(Article)
-                }                
+                },
+                search: {
+                    type: new GraphQLList(articleType),
+                    args: {
+                        course_id: {
+                            description: 'id of the course',
+                            type: GraphQLInt
+                        },
+                        offset: {
+                            description: 'offset the record',
+                            type: GraphQLInt
+                        },
+                        limit: {
+                            description: 'limit total records fetched',
+                            type: GraphQLInt
+                        }
+                    },
+                    resolve: async (root, {course_id, offset, limit}, info) => {
+                        offset = offset || 0;
+                        limit = limit || 10;
+                        const Article = ctx.getEntity('Article');
+                        const articles = Article.findAll({
+                            where: {
+                                course_id
+                            },
+                            limit,
+                            offset,
+                        });
+
+                        return articles;
+                    }
+                }
             }
         })
     });
