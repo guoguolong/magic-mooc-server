@@ -1,5 +1,4 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLString} = require('graphql');
-const { importSchema } = require('graphql-import')
 
 module.exports = function(ctx, config) {
     const article = require('./article')(ctx, config);
