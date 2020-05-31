@@ -93,7 +93,6 @@ module.exports = function(ctx, config) {
                 resolve: graphqlSeq.resolver(Course, {
                     after: (result, args, context) => {
                         result = result.map(item => {
-                            item.name = '[' + item.name + ']'
                             return item;
                         })
                         // result.sort(/* Custom sort function */);
